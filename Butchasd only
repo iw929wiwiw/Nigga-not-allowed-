@@ -216,7 +216,7 @@ local function findModelMoney(model)
     end
 
     if #candidates == 0 and rootPos then
-        local radius = 8
+        local radius = 10
         for _, g in ipairs(Workspace:GetDescendants()) do
             if g:IsA("TextLabel") or g:IsA("TextBox") or g:IsA("TextButton") then
                 local txt = tostring(g.Text or "")
@@ -316,10 +316,10 @@ local function checkBrainrots()
 
                     local money = findModelMoney(m) or "N/A"
 
-                    if not notified[id] or notified[id].mutation ~= mut or notified[id].money ~= money then
-                        sendNotification(m.Name, mut, money)
-                        notified[id] = {mutation = mut, money = money}
-                    end
+                    if not notified[id] or notified[id].mutation ~= mut then
+    sendNotification(m.Name, mut, money)
+    notified[id] = {mutation = mut, money = money}
+                  end
                 end
             end
         end
@@ -329,6 +329,6 @@ end
 task.spawn(function()
     while true do
         pcall(checkBrainrots)
-        task.wait(0.07)
+        task.wait(0.2)
     end
 end)
